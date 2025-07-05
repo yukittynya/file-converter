@@ -1,108 +1,130 @@
-const app = document.getElementById('app');
+const app = document.getElementById('app'); 
 let loading = false;
 
-function load_page(url, current_page) {
+function load_page(page, current_page) {
     if (loading) return;
     loading = true;
     
-    const target = normalize_path(url);
-    const file_path = target === '/' ? '/index.html' : `${target}.html`;
-
     const link0 = document.getElementById('link0');
     const link1 = document.getElementById('link1');
     const link2 = document.getElementById('link2');
-
-    if (target === "/") {
-        link0.classList.add('active'); 
-        link1.classList.remove('active'); 
-        link2.classList.remove('active'); 
-    }
-
-    if (target === "/convert") {
-        link0.classList.remove('active');
-        link1.classList.add('active'); 
-        link2.classList.remove('active');
-    }
-
-    if (target === "/settings") {
-        link0.classList.remove('active');
-        link1.classList.remove('active'); 
-        link2.classList.add('active');
+    
+    [link0, link1, link2].forEach(link => link?.classList.remove('active'));
+    
+    if (page === 'home') {
+        link0?.classList.add('active');
+    } else if (page === 'convert') {
+        link1?.classList.add('active');
+    } else if (page === 'settings') {
+        link2?.classList.add('active');
     }
     
-    fetch(file_path)
-        .then(result => result.text())
-        .then(html => {
-            const temp = document.createElement('div');
-            temp.innerHTML = html;
+    let new_page_content = '';
+    
+    switch(page) { 
+        case 'home':
+            new_page_content = `
+                <section class="page" data-page="home">
+                    <div class="container">
+                        <h1 class="container-header">Hi there</h1>
+                    </div> 
+                </section>
+            `;
+            break;
 
-            const new_page = temp.querySelector('.page');
-            const current = app.querySelector('.page');
-            
-            if (current) {
-                current.classList.remove('active');
-               
-                if (current_page === "/") {
-                    current.classList.add('exit-left');
-                }
+        case 'convert':
+            new_page_content = `
+                <section class="page" data-page="convert">
+                    <div class="container">
+                        <h1 class="container-header">Convert</h1>
+                    </div> 
+                </section>
+            `;
+            break;
 
-                if (current_page === "/settings") {
-                    current.classList.add('exit-right');
-                }
-
-                if (current_page === "/convert" && target === "/") {
-                    current.classList.add('exit-right');
-                }
-
-                if (current_page === "/convert" && target === "/settings") {
-                    current.classList.add('exit-left');
-                }
-                
-                setTimeout(() => {
-                    if (current && current.parentNode) {
-                        app.removeChild(current);
-                    }
-                }, 500);
-            }
-            
-            if (current_page === "/") {
-                new_page.classList.add('enter-right');
-            }
-
-            if (current_page === "/settings") {
-                new_page.classList.add('enter-left')
-            }
-
-            if (current_page === "/convert" && target === "/") {
-                new_page.classList.add('enter-left')
-            }
-
-            if (current_page === "/convert" && target === "/settings") {
-                new_page.classList.add('enter-right');
-            }
-
-            app.appendChild(new_page);
-            
-            requestAnimationFrame(() => {
-                new_page.offsetHeight; 
-                new_page.classList.remove('enter-right', 'enter-left');
-                new_page.classList.add('active');
-
-                setTimeout(() => {
-                    loading = false;
-                }, 500);
-            });
-        })
-        .catch(err => {
-            console.error("Page loading failed:", err);
-
-            app.innerHTML = `<div class="page active">
-                <h1>Error loading ${url}</h1>
-                <p>Page could not be loaded. Please try again.</p>
-            </div>`;
-
+        case 'settings':
+            new_page_content = `
+                <section class="page" data-page="settings">
+                    <div class="container">
+                        <h1 class="container-header">Settings</h1>
+                    </div> 
+                </section>
+            `;
+            break;
+        default:
+            new_page_content = `
+                <section class="page active" data-page="error">
+                    <div class="container">
+                        <h1 class="container-header">Page Not Found</h1>
+                        <p>The requested page could not be found.</p>
+                    </div> 
+                </section>
+            `;
             loading = false;
-        });
+            app.innerHTML = new_page_content;
+            return;
+    }
+    
+    const temp = document.createElement('div');
+    temp.innerHTML = new_page_content;
+
+    const new_page = temp.querySelector('.page');
+    const current = app.querySelector('.page');
+    
+    if (current) {
+        current.classList.remove('active');
+        
+        if (current_page === 'home') {
+            current.classList.add('exit-left');
+        } else if (current_page === 'settings') {
+            current.classList.add('exit-right');
+        } else if (current_page === 'convert' && page === 'home') {
+            current.classList.add('exit-right');
+        } else if (current_page === 'convert' && page === 'settings') {
+            current.classList.add('exit-left');
+        }
+        
+        setTimeout(() => {
+            if (current && current.parentNode) {
+                app.removeChild(current);
+            }
+        }, 500);
+    }
+    
+    if (current_page === 'home') {
+        new_page.classList.add('enter-right');
+    } else if (current_page === 'settings') {
+        new_page.classList.add('enter-left');
+    } else if (current_page === 'convert' && page === 'home') {
+        new_page.classList.add('enter-left');
+    } else if (current_page === 'convert' && page === 'settings') {
+        new_page.classList.add('enter-right');
+    }
+    
+    app.appendChild(new_page);
+    
+    requestAnimationFrame(() => {
+        new_page.offsetHeight; 
+        new_page.classList.remove('enter-right', 'enter-left');
+        new_page.classList.add('active');
+        
+        setTimeout(() => {
+            loading = false;
+        }, 500);
+    });
+}
+
+function normalize_page(path) {
+    const clean_path = path.replace(/\/+$/, '') || '/';
+
+    const page_map = {
+        '/': 'home',
+        '/home': 'home',
+        '/convert': 'convert',
+        '/settings': 'settings'
+    };
+    
+    return page_map[clean_path] || 'home';
 }
 
 function handle_link_click(e) {
@@ -111,37 +133,28 @@ function handle_link_click(e) {
     
     e.preventDefault();
     const href = link.getAttribute('href');
-    const url = normalize_path(href);
-    const current = normalize_path(window.location.pathname);
+    const page = normalize_page(href);
+    const current_page = app.querySelector('.page')?.getAttribute('data-page') || 'home';
+
+    console.log("page:", page);
+    console.log("current_page:", current_page);
     
-    if (current === url) return;
+    if (current_page === page) return;
     
-    history.pushState({ url: url, timestamp: Date.now() }, '', url);
-    load_page(url, current);
+    history.pushState({ page: page, timestamp: Date.now() }, '', href);
+    load_page(page, current_page);
 }
 
-function normalize_path(path) {
-    return path
-        .replace(/\/+$/, '')
-        .replace(/\.html$/, '')
-        .replace(/^\/?/, '/');
-}
-
-window.addEventListener('popstate', ()=> {
-    const path = normalize_path(window.location.pathname);
-    load_page(path);
+window.addEventListener('popstate', () => {
+    const page = normalize_page(window.location.pathname);
+    const current_page = app.querySelector('.page')?.getAttribute('data-page') || 'home';
+    load_page(page, current_page);
 });
-
-
-
-document.addEventListener('click', handle_link_click);
 
 document.addEventListener('DOMContentLoaded', () => {
-    const current_path = normalize_path(window.location.pathname);
-
-    if (!app.querySelector('.page')) {
-        load_page(current_path);
-    }
+    const current_path = window.location.pathname;
+    const page = normalize_page(current_path);
+    load_page(page, 'home');
 });
 
-load_page("/");
+document.addEventListener('click', handle_link_click);
