@@ -26,8 +26,18 @@ function load_page(page, current_page) {
             new_page_content = `
                 <section class="page" data-page="home">
                     <div class="container">
-                        <h1 class="container-header">Hi there</h1>
-                    </div> 
+                        <div class="message-container">
+                            <h2 class="home-message">This is a silly little project that I am doing for myself, with the goal of improving my fullsatck skills yippee :3</h2>
+                            <p class="home-message-two">File converter for all video, image and document formats </p> 
+                        </div>
+
+                            <div id="redirect-convert")">
+                                <input type="file" id="upload-files">
+                                <h1 class="redirect-header">Start converting</h1>
+                                <svg id="redirect-convert-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
+                                <h4 id="redirect-convert-text">Click to convert</h4>
+                            </div>
+                    </div>
                 </section>
             `;
             break;
@@ -51,6 +61,7 @@ function load_page(page, current_page) {
                 </section>
             `;
             break;
+
         default:
             new_page_content = `
                 <section class="page active" data-page="error">
@@ -60,6 +71,7 @@ function load_page(page, current_page) {
                     </div> 
                 </section>
             `;
+
             loading = false;
             app.innerHTML = new_page_content;
             return;
@@ -136,9 +148,6 @@ function handle_link_click(e) {
     const page = normalize_page(href);
     const current_page = app.querySelector('.page')?.getAttribute('data-page') || 'home';
 
-    console.log("page:", page);
-    console.log("current_page:", current_page);
-    
     if (current_page === page) return;
     
     history.pushState({ page: page, timestamp: Date.now() }, '', href);
