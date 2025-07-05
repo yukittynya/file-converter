@@ -27,12 +27,12 @@ function load_page(page, current_page) {
                 <section class="page" data-page="home">
                     <div class="container">
                         <div class="message-container">
-                            <h2 class="home-message">This is a silly little project that I am doing for myself, with the goal of improving my fullsatck skills yippee :3</h2>
+                            <h2 class="home-message">This is a silly little project that I am doing for myself, with the goal of improving my fullstack skills yippee</h2>
                             <p class="home-message-two">File converter for all video, image and document formats </p> 
                         </div>
 
                             <div id="redirect-convert")">
-                                <input type="file" id="upload-files">
+                                <input type="file" id="upload-files" onclick="load_page('convert', 'home')" multiple accept="image/*">
                                 <h1 class="redirect-header">Start converting</h1>
                                 <svg id="redirect-convert-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
                                 <h4 id="redirect-convert-text">Click to convert</h4>
@@ -46,7 +46,15 @@ function load_page(page, current_page) {
             new_page_content = `
                 <section class="page" data-page="convert">
                     <div class="container">
-                        <h1 class="container-header">Convert</h1>
+                        <div class="options-container"> 
+                            <p class="slider-text">Export as zip</p><label class="switch"><input type="checkbox"><span class="slider round"></span></label> 
+                            <button id="convert-items">
+                                <svg id="convert-items-icon"xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw-icon lucide-refresh-cw"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg> 
+                                <h4 id="convert-items-text">Convert</h4> 
+                            </button>
+                        
+                            <!-- Dropdown menu with output file types -->
+                        </div>
                     </div> 
                 </section>
             `;
