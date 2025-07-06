@@ -31,8 +31,7 @@ function load_page(page, current_page) {
                             <p class="home-message-two">File converter for all video, image and document formats </p> 
                         </div>
 
-                            <div id="redirect-convert")">
-                                <input type="file" id="upload-files" onclick="load_page('convert', 'home')" multiple accept="image/*">
+                            <div id="redirect-convert" onclick="load_page('convert', 'home')">
                                 <h1 class="redirect-header">Start converting</h1>
                                 <svg id="redirect-convert-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
                                 <h4 id="redirect-convert-text">Click to convert</h4>
@@ -69,6 +68,8 @@ function load_page(page, current_page) {
                                     <input id="format-search" name="format-search" type="text" placeholder="Search formats">
                                     
                                     <div class="formats-grid">
+                                        
+                                        <!--Example will have .innerHTML = formats depending on inputs-->
                                         <button class="format-item" id="png-format">png</button>
                                         <button class="format-item" id="jpg-format">jpg</button>
                                         <button class="format-item" id="gif-format">gif</button>
@@ -82,10 +83,7 @@ function load_page(page, current_page) {
                                 </div>
                             </div>
 
-                            <div class="files-container">
-                                <div class="file-card">
-                                    
-                                </div>
+                            <div id="files-container">
                             </div>
                         </div>
                     </div> 
