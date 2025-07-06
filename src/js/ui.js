@@ -18,14 +18,10 @@ function toggle_dropdown() {
     const status = current === 'closed' ? 'expanded' : 'closed';
 
     document.documentElement.setAttribute('dropdown-status', status);
-
-    localStorage.setItem('dropdown-status', status);
 }
 
 function load_dropdown() {
-    const status = localStorage.getItem('dropdown-status')
-
-    document.documentElement.setAttribute('dropdown-status', status);
+    document.documentElement.setAttribute('dropdown-status', 'closed');
 }
 
 load_theme();

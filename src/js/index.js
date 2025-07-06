@@ -31,11 +31,11 @@ function load_page(page, current_page) {
                             <p class="home-message-two">File converter for all video, image and document formats </p> 
                         </div>
 
-                            <div id="redirect-convert" onclick="load_page('convert', 'home')">
-                                <h1 class="redirect-header">Start converting</h1>
-                                <svg id="redirect-convert-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
-                                <h4 id="redirect-convert-text">Click to convert</h4>
-                            </div>
+                        <div id="redirect-convert" onclick="load_page('convert', 'home')">
+                            <h1 class="redirect-header">Start converting</h1>
+                            <svg id="redirect-convert-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
+                            <h4 id="redirect-convert-text">Click to convert</h4>
+                        </div>
                     </div>
                 </section>
             `;
@@ -44,7 +44,7 @@ function load_page(page, current_page) {
         case 'convert':
             new_page_content = `
                 <section class="page" data-page="convert">
-                    <div class="container">
+                    <div class="convert-container">
                         <div class="options-container"> 
                             <button id="download-all-zip">
                                 <svg id="download-all-zip-icon"xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download-icon lucide-download"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg>
@@ -60,8 +60,8 @@ function load_page(page, current_page) {
                                 <h4 id="formats-text">Convert to </h4>
                                 <button id="formats-button" onclick="toggle_dropdown()">
                                     <h4 id="formats-button-text">n/a</h4>
-                                    <svg id="expand-dropdown" class="formats-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
-                                    <svg id="close-dropdown" class="formats-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up-icon lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
+                                    <svg id="close-dropdown" class="formats-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                                    <svg id="expand-dropdown" class="formats-button-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up-icon lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
                                 </button>
 
                                 <div class="formats-content">
@@ -83,8 +83,15 @@ function load_page(page, current_page) {
                                 </div>
                             </div>
 
-                            <div id="files-container">
-                            </div>
+                        </div>
+
+                        <div class="upload-files-container">
+                            <input id="upload-files-input" type="file" multiple>
+                            <svg id="upload-files-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
+                            <h4 id="upload-files-text">Upload files</h4>
+                        </div>
+
+                        <div id="files-container">
                         </div>
                     </div> 
                 </section>

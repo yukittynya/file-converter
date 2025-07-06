@@ -263,17 +263,6 @@ main#app {
     width: 25%;
 }
 
-#upload-files {
-    cursor: pointer;
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-}
-
 #redirect-convert:hover {
     transform: scale(1.1);
 }
@@ -325,7 +314,7 @@ main#app {
 .options-container {
     margin: auto;
     margin-top: 3rem;
-    min-width: 45%;
+    width: 45%;
     min-height: 130px;
     background-color: var(--clr-surface-a10);
     border-radius: 1.5rem;
@@ -341,7 +330,7 @@ main#app {
     display: flex;
     margin: auto;
     margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin-right: 0.75rem;
     padding: 1rem;
     justify-content: center;
     align-items: center;
@@ -381,8 +370,8 @@ main#app {
     color: var(--clr-font-alt);
     border: none;
     margin: auto;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
     padding: 1rem;
     border-radius: 1.5rem;
     transition: 0.3s ease-in-out;
@@ -417,7 +406,7 @@ main#app {
     justify-content: center;
     align-items: center;
     margin: auto;
-    margin-left: 0.5rem;
+    margin-left: 0.75rem;
     margin-right: 0.5rem;
     transition: 0.3s ease-in-out;
     color: var(--clr-font-base);
@@ -485,4 +474,57 @@ main#app {
 
 .formats-content {
     display: none;
+}
+
+.convert-container {
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-files-container {
+    position:relative;
+    margin: auto;
+    margin-top: 3rem;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    width: 185px;
+    height: 175px;
+    border-radius: 1.5rem;
+    background-color: var(--clr-surface-a10); 
+    box-shadow: 3px 5px 5px var(--clr-surface-a20);
+    transition: 0.3s ease-in-out;
+}
+
+.upload-files-container:hover {
+    transform: scale(1.1);
+}
+
+#upload-files-input {
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    top: 0;
+    z-index: 10;
+}
+
+#upload-files-icon {
+    margin: auto;
+    width: 3rem;
+    height: 3rem;
+    color: var(--clr-primary-a0);
+    transition: 0.3s ease-in-out;
+}
+
+#upload-files-text {
+    margin: auto;
+    margin-top: 0.75rem;
+    width: 100%;
+    color: var(--clr-font-base);
+    transition: 0.3s ease-in-out;
 }
