@@ -65,13 +65,10 @@ function load_page(page, current_page) {
                                 </button>
 
                                 <div class="formats-content">
-                                    <input id="format-search" name="format-search" type="text" placeholder="Search formats">
-                                    
                                     <div class="formats-grid">
-                                        
                                         <!--Example will have .innerHTML = formats depending on inputs-->
-                                        <button class="format-item" id="png-format">png</button>
-                                        <button class="format-item" id="jpg-format">jpg</button>
+                                        <button class="format-item" id="png-format" onclick="set_target_format_for_all('.png')">png</button>
+                                        <button class="format-item" id="jpg-format" onclick="set_target_format_for_all('.jpg')">jpg</button>
                                         <button class="format-item" id="gif-format">gif</button>
                                         <button class="format-item" id="webp-format">webp</button>
                                         <button class="format-item" id="tiff-format">tiff</button>
@@ -86,7 +83,7 @@ function load_page(page, current_page) {
                         </div>
 
                         <div class="upload-files-container">
-                            <input id="upload-files-input" type="file" multiple>
+                            <input id="upload-files-input" type="file" multiple accept="image/*">
                             <svg id="upload-files-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
                             <h4 id="upload-files-text">Upload files</h4>
                         </div>

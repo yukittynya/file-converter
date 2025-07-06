@@ -18,6 +18,9 @@ function toggle_dropdown() {
     const status = current === 'closed' ? 'expanded' : 'closed';
 
     document.documentElement.setAttribute('dropdown-status', status);
+
+    const formats_dropdown = document.querySelector('.formats-content');
+    formats_dropdown.classList.toggle('expanded');
 }
 
 function load_dropdown() {
