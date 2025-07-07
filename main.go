@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -16,8 +18,7 @@ func main() {
 		log.Fatal("Failed creating uploads dir :/", err);
 	}
 
-	//fs := http.FileServer(http.Dir("./src/"));
-
+	http.HandleFunc("/api/upload", handleFilesUpload)
 	http.HandleFunc("/", spaHandler)
 	http.ListenAndServe(":3030", nil);
 }
@@ -42,4 +43,45 @@ func spaHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.ServeFile(w, r, path)
+}
+
+func handleFilesUpload(w http.ResponseWriter, r *http.Request) {	
+	r.ParseMultipartForm(250 << 20)
+
+	files := r.MultipartForm.File["upload-files-input"]
+
+	for _, fHeader := range files {
+		file, err := fHeader.Open()
+
+		if err != nil {
+			fmt.Println("Error uploading file")
+			fmt.Println(err)
+
+			w.WriteHeader(http.StatusInternalServerError)
+			return 
+		}
+
+		defer file.Close()
+
+		dst, err := os.Create("/uploads/" + fHeader.Filename)
+		if err != nil {
+			fmt.Println("Error creating file on the server")
+			fmt.Println(err)
+
+			w.WriteHeader(http.StatusInternalServerError)
+			return 
+		}
+
+		defer dst.Close()	
+
+		if _, err := io.Copy(dst, file); err != nil {
+			fmt.Println("Error copying file")
+			fmt.Println(err)
+
+			w.WriteHeader(http.StatusInternalServerError)
+			return 
+		}
+
+		fmt.Println(w, "File %s uploaded and saved successfully", fHeader.Filename)
+	}
 }

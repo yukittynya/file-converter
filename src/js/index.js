@@ -82,11 +82,11 @@ function load_page(page, current_page) {
 
                         </div>
 
-                        <div class="upload-files-container">
-                            <input id="upload-files-input" type="file" multiple accept="image/*">
+                        <form class="upload-files-container" action="http://localhost:3030/api/upload" method="POST" enctype="multipart/form-data">
+                            <input id="upload-files-input" name="upload-files-input" type="file" multiple accept="image/*">
                             <svg id="upload-files-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-up-icon lucide-folder-up"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="m9 13 3-3 3 3"/></svg>
                             <h4 id="upload-files-text">Upload files</h4>
-                        </div>
+                        </form>
 
                         <div id="files-container">
                         </div>

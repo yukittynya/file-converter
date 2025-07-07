@@ -11,7 +11,9 @@ window.addEventListener('DOMContentLoaded', () => {
     convert_button = document.getElementById('convert-items');
     zip_button = document.getElementById('download-all-zip');
 
-    file_input.addEventListener('change', upload_files);
+    file_input.onchange = function() {
+        files_container.submit;
+    }
 });
 
 function set_target_format_for_all(format) {
