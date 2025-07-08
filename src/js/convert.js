@@ -12,9 +12,26 @@ window.addEventListener('DOMContentLoaded', () => {
     zip_button = document.getElementById('download-all-zip');
 
     file_input.onchange = function() {
-        files_container.submit;
+        uploadFiles(file_input.files);        
     }
 });
+
+function uploadFiles(files) {
+    const formData = new FormData;
+
+    for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+    }
+
+    try {
+        fetch("http://localhost:3030/api/upload", {
+            method: 'POST',
+            body: formData
+        });
+    } catch (err) {
+        console.error("UploadFiles error", err);
+    }
+}
 
 function set_target_format_for_all(format) {
     const format_text = document.getElementById('formats-button-text'); 
@@ -37,14 +54,4 @@ function set_target_format_for_all(format) {
     format_button.classList.toggle('active');
 
     format_text.innerText = format;
-}
-
-function upload_files() {
-    files = [...files, ...file_input.files];
-}
-
-function clear_files() {
-    for (let i = 0; i < files.length; i++) {
-        files.pop();
-    }
 }
