@@ -5,7 +5,9 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 func main() {
@@ -17,7 +19,14 @@ func main() {
 		fmt.Println("Failed creating uploads dir :/", err);
 	}
 
+	http.HandleFunc("/uploads/", serveUploads);
+
 	http.HandleFunc("/api/upload", handleFilesUpload)
+	http.HandleFunc("/api/delete", handleFilesDelete)
+	http.HandleFunc("/api/convert", handleConvert)
+	http.HandleFunc("/api/downloadzip", handleDownloadZip)
+
+	//SPA Catch
 	http.HandleFunc("/", spaHandler)
 
 	fmt.Println("Listening :3")
@@ -93,6 +102,118 @@ func handleFilesUpload(w http.ResponseWriter, r *http.Request) {
 			return 
 		}
 
-		fmt.Printf("File %s uploaded and saved successfully", fHeader.Filename)
+		fmt.Printf("File %s uploaded and saved successfully\n", fHeader.Filename)
 	}
+}
+
+func handleFilesDelete(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseMultipartForm(10 << 20)
+	if err != nil {
+		fmt.Println("Error parsing")
+		return
+	}
+
+	name := r.FormValue("file")
+
+	if strings.Contains(name, "..") {
+		http.Error(w, "Invalid file", http.StatusBadRequest)
+		return	
+	}
+
+	if name == "" {
+		http.Error(w, "No file", http.StatusBadRequest)
+		return	
+	}
+
+    filePath := filepath.Join("./uploads", name);
+
+	err = os.Remove(filePath)
+	if err != nil {
+		fmt.Printf("Error deleting file: %s\n", name)
+		return
+	}
+
+	fmt.Printf("Deleted file, %s\n", name)
+}
+
+func handleConvert(w http.ResponseWriter, r *http.Request) {
+	err := os.MkdirAll("./outputs", 0755)
+	if err != nil {
+		fmt.Println("Error making outputs directory")
+		return
+	}
+
+	err = r.ParseMultipartForm(50 << 20)	
+	if err != nil {
+		fmt.Println("Error: Parsing")
+		return
+	}
+
+	names := strings.Split(r.FormValue("fileNames"), ",")
+	targetFormat := r.FormValue("format")
+
+	for _, name := range names {
+		name = strings.TrimSpace(name)
+		if name == "" {
+			continue
+		}
+
+		fmt.Printf("Converting file: %s\n", name)
+		
+		inputPath := filepath.Join("./uploads", name)
+		outputFilename := strings.TrimSuffix(name, filepath.Ext(name)) + "." + targetFormat
+		outputPath := filepath.Join("./outputs", outputFilename)
+
+		cmd := exec.Command("ffmpeg", "-i", inputPath, "-y", outputPath)
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println("Cmd failed")
+			return
+		}
+
+		err = os.Remove(inputPath)
+		if err != nil {
+			fmt.Printf("Couldnt delete: %s\n", inputPath)
+		}
+
+		fmt.Printf("Converted %s to %s\n", inputPath, outputFilename)
+	}
+}
+
+func handleDownloadZip(w http.ResponseWriter, r *http.Request) {
+	zipPath := "./outputs/files.zip"
+
+	os.Remove(zipPath)
+
+	err := os.MkdirAll("./outputs", 0755)
+	if err != nil {
+		fmt.Println("Error making outputs directory")
+		return
+	}
+
+	cmd := exec.Command("zip", "-r", "files.zip", ".", "-x", "files.zip")
+	cmd.Dir = "./outputs"
+
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("Error zipping")
+		return
+	}
+
+	http.ServeFile(w, r, zipPath)
+	fmt.Println("Zip file served to user")
+
+	os.RemoveAll("./outputs")
+	os.MkdirAll("/outputs", 0755)
+}
+
+func serveUploads(w http.ResponseWriter, r *http.Request) {
+	name := strings.TrimPrefix(r.URL.Path, "/uploads/")
+
+	if strings.Contains(name, "..") {
+		http.Error(w, "Invalid file", http.StatusBadRequest)
+		return	
+	}
+
+	http.ServeFile(w, r, filepath.Join("./uploads", name))
 }

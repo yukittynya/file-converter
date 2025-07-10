@@ -35,32 +35,6 @@
 }
 
 [data-theme="dark"] {
-    /*    
-*    --clr-dark-a0: #000000;
-*    --clr-light-a0: #ffffff;
-*
-*    --clr-primary-a0: #f7c8e9;
-*    --clr-primary-a10: #f8ceeb;
-*    --clr-primary-a20: #f9d4ee;
-*    --clr-primary-a30: #fadaf0;
-*    --clr-primary-a40: #fbe0f3;
-*    --clr-primary-a50: #fce7f5;
-*
-*    --clr-surface-a0: #121212;
-*    --clr-surface-a10: #282828;
-*    --clr-surface-a20: #3f3f3f;
-*    --clr-surface-a30: #575757;
-*    --clr-surface-a40: #717171;
-*    --clr-surface-a50: #8b8b8b;
-*
-*    --clr-surface-tonal-a0: #252224;
-*    --clr-surface-tonal-a10: #393738;
-*    --clr-surface-tonal-a20: #4f4c4e;
-*    --clr-surface-tonal-a30: #666365;
-*    --clr-surface-tonal-a40: #7e7b7d;
-*    --clr-surface-tonal-a50: #969495;
-*/ 
-
     /** Base colors */
     --clr-dark-a0: #000000;
     --clr-light-a0: #ffffff;
@@ -105,12 +79,12 @@ body {
     background: var(--clr-surface-a0);
     height: 100vh;
     transition: 0.5s ease-in-out;
+    overflow-y: auto
 }
 
 
 main#app {
     position: relative;
-    overflow: hidden;
     width: 100%;
     min-height: 100vh;
 }
@@ -572,4 +546,57 @@ main#app {
     width: 100%;
     color: var(--clr-font-base);
     transition: 0.3s ease-in-out;
+}
+
+#files-container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 40%;
+    align-content: center;
+    justify-content: center;
+}
+
+.file-card {
+    margin: 1.5rem;
+    border-radius: 1.5rem;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    width: 220px;
+    height: 220px;
+    background-color: var(--clr-surface-a10); 
+    box-shadow: 3px 5px 5px var(--clr-surface-a20);
+    transition: 0.3s ease-in-out;
+}
+
+.file-card-row {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.file-card-name {
+    color: var(--clr-font-base);
+    margin: auto;
+    transition: 0.3s ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-file-card {
+    background-color: var(--clr-surface-a20);
+    color: var(--clr-font-base);
+    border: none;
+    border-radius: 100%;
+    padding: 0.5rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    font-weight: bold;
+    margin: auto;
+}
+
+.file-card-preview {
+    object-fit: contain;
 }
