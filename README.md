@@ -1,7 +1,7 @@
 # file-converter
 Part of my studies towards #awesome do it all goat, anyways fun little website that im working on to convert files :) Fun learning how to implemetnt the single page app and cool animations and stuff :3 
 
-python3 -m http.server to locally host it 
+go run main.go - to locally host it 
 
 #### Goals:
 
